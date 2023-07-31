@@ -1,0 +1,106 @@
+<html>
+<head>
+    <title>Upload Progress Photo</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <style>
+
+        .navbar-custom, .footer {
+            background-color: #FF0000;
+        }
+
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+
+        .btn-custom {
+            background-color: #FF0000;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+
+        .btn-custom:hover {
+            background-color: #CC0000;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="{% url 'main_view' %}">Fitness Journal</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+
+                {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_user' %}">Вход</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_user' %}">Изход</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="content">
+        <h1>Upload Progress Photo</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-custom mt-3">Upload Photo</button>
+        </form>
+
+        <a href="{% url 'added_photos' %}" class="btn btn-custom mt-3">Nazad</a>
+    </div>
+
+    <footer class="footer py-3 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+
+                    <a href="#" class="text-white mx-2">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-white mx-2">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-white mx-2">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                    <p class="text-white">© 2023 Fitness Journal. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

@@ -1,5 +1,5 @@
 from django import forms
-from .models import ProgressPhoto,Profile
+from .models import ProgressPhoto, Profile
 
 
 class ProfileForm(forms.ModelForm):
@@ -21,9 +21,10 @@ class MealForm(forms.Form):
         if self.is_bound and 'number_of_meals' in self.data:
             meal_count = int(self.data['number_of_meals'])
             for i in range(1, meal_count + 1):
-                meal_field_name = f'meal_{i}'
+                meal_field_name = f'Meal_{i}'
                 if meal_field_name not in self.fields:
                     self.fields[meal_field_name] = forms.CharField(label=f'Meal {i}')
+
 
 class ProgressPhotoForm(forms.ModelForm):
     class Meta:

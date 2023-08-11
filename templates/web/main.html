@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 <head>
     {% if not user.is_authenticated %}
@@ -13,11 +14,16 @@
 
 
     <style>
+        body {
+            background-image: url("{% static 'background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
         .navbar-custom, .footer {
             background-color: #FF0000;
         }
-
 
         body {
             display: flex;
@@ -29,21 +35,73 @@
             flex: 1;
         }
 
-
         .btn-custom {
             background-color: #FF0000;
             color: #fff;
             text-decoration: none;
             border: none;
-            border-radius: 4px;
+            border-radius: 40px;
             font-size: 16px;
             cursor: pointer;
             padding: 10px 20px;
+
+        }
+        .buttons-body {
+            display: flex;
+            margin-bottom: 15px;
+            margin-left: 5px;
+            gap: 10px;
+        }
+        .btn-custom-not-auth {
+            background-color: #FF0000;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 40px;
+            font-size: 40px;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin-left: 300px;
+            margin-top: 40px;
+
+
+        }
+        .buttons-body-not-auth {
+            display: flex;
+            margin-left: 50px;
+        }
+        .home-text {
+            color: #fff;
+            margin-left: 20px;
+            margin-top: 20px;
+            font-size: 28px;
+        }
+        .home-text-not-auth {
+            color: #fff;
+            margin-left: 20px;
+            margin-top: 80px;
+            font-size: 21px;
+        }
+        .random-quote {
+            color: #fff;
+            margin-left: 20px;
+            margin-top: 200px;
+            font-size: 18px;
+        }
+        .arrow {
+            margin-top: 20px;
+            margin-left: 150px;
+            width: 150px;
+            height: 100px;
         }
 
         .btn-custom:hover {
             background-color: #CC0000;
         }
+        .footer { position: fixed; top: 90%; left: 0; right: 0; bottom: 0;
+      background: #ffffff; border: solid black; border-width: 2px 0 0 0; }
+
+
     </style>
 </head>
 <body>
@@ -53,17 +111,17 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 {% if not user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login_user' %}">Вход</a>
+                        <a class="btn btn-custom mt-0" href="{% url 'login_user' %}">Log in</a>
+                        <a class="btn btn-custom mt-0" href="{% url 'register_user' %}">Sign up</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout_user' %}">Изход</a>
+                        <a class="btn btn-custom mt-0" href="{% url 'logout_user' %}">Log out</a>
                     </li>
-
                 {% endif %}
             </ul>
         </div>
@@ -72,51 +130,37 @@
 
     <div class="content">
         {% if not user.is_authenticated %}
-            <a href='{% url 'login_user' %}' class="btn btn-custom mt-3">
-                Вход
-            </a>
+            <p class="home-text-not-auth">
+            No matter what kind of sport a person practices, it is important to<br> have his own diary in which he can keep notes on his nutrition and<br> monitor the progress of his appearance. No matter where you are<br> and what device you use the site from, Fitness Journal gives you the<br> opportunity to do these things personal! Embark on your adventure<br> now!
+            </p>
+            <div class="buttons-body-not-auth">
+                <a href='{% url 'login_user' %}' class="btn btn-custom-not-auth">Get Started!</a>
+            </div>
+            <img src="{% static 'arrow.png' %}" alt="My Image" class="arrow">
         {% else %}
-            <h1>Welcome, {{ user.email }}!</h1>
-            <a href='{% url 'logout_user' %}' class="btn btn-custom mt-3">
-                Изход
-            </a>
-            <a href='{% url 'added_meal' %}' class="btn btn-custom mt-3">
-                Мой хранения
-            </a>
-            <a href='{% url 'custom_diet' %}' class="btn btn-custom mt-3">
-                Създай хранителен режим
-            </a>
-            <a href='{% url 'added_photos' %}' class="btn btn-custom mt-3">
-                Моят прогрес
-            </a>
-            <a href='{% url 'profile_update' %}' class="btn btn-custom mt-3">
-                Моят профил
-            </a>
-
+            <div class="buttons-body">
+                <a href='{% url 'added_meal' %}' class="btn btn-custom mt-3">My Meals</a>
+                <a href='{% url 'custom_diet' %}' class="btn btn-custom mt-3">Create Meal</a>
+                <a href='{% url 'added_photos' %}' class="btn btn-custom mt-3">My Progress</a>
+                <a href='{% url 'my_profile' %}' class="btn btn-custom mt-3">My Profile</a>
+                <a href='{% url 'contacts' %}' class="btn btn-custom mt-3">Contacts</a>
+            </div>
+            <p class="home-text">
+                Hello! Every day you take one small step towards change.<br>
+                Don't wait to get motivated, because motivation comes with<br>persistence and discipline.
+            </p>
+            <div class="content">
+                <p class="random-quote">{{ random_quote }}</p>
+            </div>
         {% endif %}
+            </div>
     </div>
 
     <footer class="footer py-3 bg-dark">
         <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="row mt-2">
                 <div class="col-12 text-center">
                     <p class="text-white">© 2023 Fitness Journal. All rights reserved.</p>
                 </div>
-            </div>
         </div>
     </footer>
 </body>

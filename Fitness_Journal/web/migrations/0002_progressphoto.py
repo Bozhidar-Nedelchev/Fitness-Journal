@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='ProgressPhoto',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('photo', models.ImageField(upload_to='progress_photos/')),
+                ('photo', models.ImageField(upload_to='static/')),
                 ('caption', models.CharField(max_length=200)),
                 ('upload_date', models.DateTimeField(auto_now_add=True)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),

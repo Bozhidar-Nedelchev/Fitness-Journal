@@ -1,0 +1,101 @@
+/*#header, #footer {*/
+/*    background-color: #FF0000;*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Change the link color in the header *!*/
+/*#header a {*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Change the link color in the footer *!*/
+/*#footer a {*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Change the background color of the sidebar *!*/
+/*#side-menu {*/
+/*    background-color: #FF0000;*/
+/*}*/
+
+/*!* Change the link color in the sidebar *!*/
+/*#side-menu a {*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Change the background color of the selected sidebar item *!*/
+/*#side-menu .selected {*/
+/*    background-color: #CC0000;*/
+/*}*/
+
+/*!* Change the background color of the dropdown menu in the sidebar *!*/
+/*#side-menu .dropdown-menu {*/
+/*    background-color: #FF0000;*/
+/*}*/
+
+/*!* Change the link color in the dropdown menu in the sidebar *!*/
+/*#side-menu .dropdown-menu a {*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Change the background color of the content area *!*/
+/*.content-box {*/
+/*    background-color: #fff;*/
+/*    color: #000;*/
+/*}*/
+
+/*!* Change the color of the form fields *!*/
+/*.form-control {*/
+/*    background-color: #f2f2f2;*/
+/*    color: #000;*/
+/*}*/
+
+/*!* Change the background color of the buttons *!*/
+/*.submit-row input[type="submit"],*/
+/*.submit-row input[type="button"],*/
+/*.submit-row input[type="reset"],*/
+/*.related-widget-wrapper input[type="button"] {*/
+/*    background-color: #FF0000;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    padding: 6px 12px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*!* Change the hover color of the buttons *!*/
+/*.submit-row input[type="submit"]:hover,*/
+/*.submit-row input[type="button"]:hover,*/
+/*.submit-row input[type="reset"]:hover,*/
+/*.related-widget-wrapper input[type="button"]:hover {*/
+/*    background-color: #CC0000;*/
+/*}*/
+
+/*!* Change the color of the link in the change form *!*/
+/*.changeform-links a {*/
+/*    color: #FF0000;*/
+/*}*/
+
+/*!* Position the footer at the bottom of the page *!*/
+/*body {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    min-height: 100vh;*/
+/*}*/
+
+/*.content {*/
+/*    flex: 1;*/
+/*}*/
+
+/*.footer {*/
+/*    margin-top: auto;*/
+/*    padding-top: 20px;*/
+/*    text-align: center;*/
+/*    background-color: #343a40; !* Change this color to the desired bg-dark color *!*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* Change the social media icon colors in the footer *!*/
+/*.footer a i {*/
+/*    color: #fff;*/
+/*}*/

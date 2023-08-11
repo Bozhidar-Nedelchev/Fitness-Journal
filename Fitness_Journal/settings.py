@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+SESSION_COOKIE_NAME = 'Fitness_Journal_session_id'
 
 ROOT_URLCONF = 'Fitness_Journal.urls'
 
@@ -130,7 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = reverse_lazy('main_view')
 
-LOGOUT_REDIRECT_URL = reverse_lazy('login_user')
+LOGOUT_REDIRECT_URL = reverse_lazy('main_view')
 
 LOGIN_URL = reverse_lazy('login_user')
 
@@ -139,4 +140,10 @@ AUTH_USER_MODEL = 'app_auth.AppUser'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'Fitness_Journal/static')]
+
+SESSION_COOKIE_AGE = 86400 #Exactly 1 day
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 

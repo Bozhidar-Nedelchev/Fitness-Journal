@@ -1,19 +1,22 @@
+{% load static %}
 <html>
 <head>
     <title>My Meals</title>
 
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
     <style>
+        body {
+            background-image: url("{% static 'background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
         .navbar-custom, .footer {
             background-color: #FF0000;
         }
-
 
         body {
             display: flex;
@@ -25,13 +28,12 @@
             flex: 1;
         }
 
-
         .btn-custom {
             background-color: #FF0000;
             color: #fff;
             text-decoration: none;
             border: none;
-            border-radius: 4px;
+            border-radius: 40px;
             font-size: 16px;
             cursor: pointer;
             padding: 10px 20px;
@@ -40,74 +42,95 @@
         .btn-custom:hover {
             background-color: #CC0000;
         }
+
+        .buttons-body {
+            display: flex;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        .meal-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+            justify-content: flex-start;
+        }
+
+        .meal-item {
+            background-color: #fff;
+            color: #333;
+            border-radius: 8px;
+            padding: 10px;
+            width: 200px;
+        }
+        h2 {
+            color: #fff;
+        }
+
+
     </style>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <a class="navbar-brand" href="{% url 'main_view' %}">Fitness Journal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-
-                {% if not user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login_user' %}">Вход</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout_user' %}">Изход</a>
-                    </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="btn btn-custom mt-0" href="{% url 'logout_user' %}">Log out</a>
+                </li>
             </ul>
         </div>
     </nav>
+        <div class="content">
+            <h2>My Meals:</h2>
+            {% if meal_plans %}
+                <form method="post" action="{% url 'added_meal' %}">
+                    {% csrf_token %}
+                    <div class="meal-container">
+                        {% for meal_plan in meal_plans %}
+                            <div class="meal-item">
+                                <h3>{{ meal_plan.date }}</h3>
+                                <ul>
+                                    {% for meal_entry in meal_plan.mealentry_set.all %}
+                                        <li>{{ meal_entry.meal_name }}</li>
+                                    {% empty %}
+                                        <li>No meals found for this day.</li>
+                                    {% endfor %}
+                                </ul>
+                                <input type="checkbox" name="selected_meal_plans" value="{{ meal_plan.id }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="button-delete">
+                        <button type="submit" name="delete_selected" class="btn btn-custom mt-3">Delete Selected</button>
+                    </div>
+                    <div class="buttons-body">
+                        <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Back</a>
+                        <a href="{% url 'custom_diet' %}" class="btn btn-custom mt-3">Create a Meal</a>
+                    </div>
+                </form>
+            {% else %}
+                <div>
+                    <h2>You have no added meals!</h2>
+                </div>
+                <div class="buttons-body">
+                        <a href="{% url 'custom_diet' %}" class="btn btn-custom mt-3">Create a Meal</a>
+                        <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Back</a>
+                    </div>
+            {% endif %}
 
-
-    <div class="content">
-        <h2>My Meals</h2>
-        {% if meal_plans %}
-            {% for meal_plan in meal_plans %}
-                <h3>{{ meal_plan.date }}</h3>
-                <ul>
-                    {% for meal_entry in meal_plan.mealentry_set.all %}
-                        <li>{{ meal_entry.meal_name }}</li>
-                    {% empty %}
-                        <li>No meals found for this day.</li>
-                    {% endfor %}
-                </ul>
-            {% endfor %}
-        {% else %}
-            <p>No meals found.</p>
-        {% endif %}
-
-        <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Back</a>
-    </div>
+        </div>
 
     <footer class="footer py-3 bg-dark">
         <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="row mt-2">
                 <div class="col-12 text-center">
                     <p class="text-white">© 2023 Fitness Journal. All rights reserved.</p>
                 </div>
-            </div>
         </div>
+
     </footer>
 </body>
 </html>

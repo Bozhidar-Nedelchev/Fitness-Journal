@@ -1,11 +1,10 @@
 {% load static %}
 <html>
 <head>
-    <title>Edit Profile</title>
+    <title>My Profile</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
     <style>
         body {
@@ -18,7 +17,6 @@
             background-color: #FF0000;
         }
 
-
         body {
             display: flex;
             flex-direction: column;
@@ -30,7 +28,6 @@
             color: #fff;
             padding: 20px;
         }
-
 
         .btn-custom {
             background-color: #FF0000;
@@ -45,7 +42,6 @@
         .buttons-body {
             display: flex;
             margin-bottom: 15px;
-            margin-left: 5px;
             gap: 10px;
         }
 
@@ -57,7 +53,6 @@
     </style>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <a class="navbar-brand" href="{% url 'main_view' %}">Fitness Journal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,18 +67,31 @@
         </div>
     </nav>
 
-
     <div class="content">
-        <h1>Edit Profile</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="buttons-body">
-                <button type="submit" class="btn btn-custom mt-3">Save Changes</button>
-                <a href="{% url 'my_profile' %}" class="btn btn-custom mt-3">Back</a>
-            </div>
-        </form>
-
+        <h1>My Profile</h1>
+        {% if user.profile %}
+            {% if user.profile.first_name %}
+                <p>First Name: {{ user.profile.first_name }}</p>
+            {% else %}
+                <p>First Name: None</p>
+            {% endif %}
+            {% if user.profile.last_name %}
+                <p>Last Name: {{ user.profile.last_name }}</p>
+            {% else %}
+                <p>Last Name: None</p>
+            {% endif %}
+            {% if user.profile.age %}
+                <p>Age: {{ user.profile.age }}</p>
+            {% else %}
+                <p>Age: None</p>
+            {% endif %}
+        {% else %}
+            <p>No user information available.</p>
+        {% endif %}
+        <div class="buttons-body">
+            <a href='{% url 'profile_update' %}' class="btn btn-custom mt-3">Edit Profile</a>
+            <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Back</a>
+        </div>
     </div>
 
     <footer class="footer py-3 bg-dark">

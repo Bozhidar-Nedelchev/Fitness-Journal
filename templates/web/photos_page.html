@@ -1,28 +1,32 @@
+{% load static %}
 <html>
 <head>
-    <title>Moite Snimki</title>
-
+    <title>My Photos</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
     <style>
+        body {
+            background-image: url("{% static 'background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
         .navbar-custom, .footer {
             background-color: #FF0000;
         }
-
 
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-
-        .content {
-            flex: 1;
+        .title {
+            color: #fff;
+            margin-top: 10px;
+            margin-left: 170px;
         }
 
 
@@ -31,89 +35,166 @@
             color: #fff;
             text-decoration: none;
             border: none;
-            border-radius: 4px;
+            border-radius: 40px;
             font-size: 16px;
             cursor: pointer;
             padding: 10px 20px;
+        }
+        .btn-custom-no-photos {
+            background-color: #FF0000;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        .buttons-header-no-photos {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 300px;
+            margin-top: 50px;
+            margin-left: 240px;
+            gap: 10px;
+        }
+        .button-delete{
+            margin-left: 1310px;
+
         }
 
         .btn-custom:hover {
             background-color: #CC0000;
         }
+
+        .content {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+        }
+        .content  {
+            border: 1.5px solid #000;
+            max-width: 100%;
+            height: auto;
+        }
+        .content img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 15px;
+            margin-left: 15px;
+
+            float: left;
+
+        }
+        .content {
+            flex: 1;
+            color: #fff;
+            padding: 20px;
+        }
+        h1 {
+            color: #fff;
+            margin-top: 140px;
+            margin-left: 170px;
+         }
+        .photo-container {
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+        .photo-item {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 20px;
+            max-width: 500px;
+            max-height: 400px;
+            overflow: hidden;
+        }
+
+        .photo-description {
+            color: #fff;
+            text-align: center;
+            margin-top: 5px;
+        }
+        .buttons-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        h1 {
+            float: left;
+        }
+
+
     </style>
 </head>
 {% if user_photos %}
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <a class="navbar-brand" href="{% url 'main_view' %}">Fitness Journal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-
-                {% if not user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login_user' %}">Вход</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout_user' %}">Изход</a>
-                    </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="btn btn-custom mt-0" href="{% url 'logout_user' %}">Log out</a>
+                </li>
             </ul>
         </div>
     </nav>
 
-
     <div class="content">
-        <h1>Moite Snimki</h1>
-        <ul>
-            {% for photo in user_photos %}
-            <li>
-                <img src="{{ photo.photo.url }}" alt="{{ photo.caption }}">
-                <p>{{ photo.caption }}</p>
-            </li>
-            {% endfor %}
-        </ul>
-
-        <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Nazad</a>
-
-        <a href="{% url 'upload_progress_photo' %}" class="btn btn-custom mt-3">Dobavi snimka</a>
+    <h1 class="title">My Photos:</h1>
+    <div class="buttons-header">
+        <a href="{% url 'upload_progress_photo' %}" class="btn btn-custom mt-3">Add Photo</a>
+        <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Back</a>
     </div>
+    <div class="photo-container">
+        <form method="post" action="{% url 'added_photos' %}">
+            {% csrf_token %}
+            {% for photo in user_photos %}
+                <div class="photo-item">
+                    <img src="{{ photo.photo.url }}" alt="{{ photo.caption }}">
+                    <p class="photo-description">{{ photo.caption }}</p>
+                    <input type="checkbox" name="selected_photos" value="{{ photo.id }}">
+                </div>
+            {% endfor %}
+            <div class="button-delete">
+                <button type="submit" name="delete_selected" class="btn btn-custom mt-3">Delete Selected</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <footer class="footer py-3 bg-dark">
         <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <!-- Add your social media links or icons here -->
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="row mt-2">
                 <div class="col-12 text-center">
                     <p class="text-white">© 2023 Fitness Journal. All rights reserved.</p>
                 </div>
-            </div>
         </div>
     </footer>
 </body>
 {% else %}
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="{% url 'main_view' %}">Fitness Journal</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-custom mt-0" href="{% url 'logout_user' %}">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <body>
-    <h1>Nqma dobaveni Snimki</h1>
-
-    <a href="{% url 'upload_progress_photo' %}" class="btn btn-custom mt-3">Dobavi snimka</a>
-
-    <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Nazad</a>
+    <h1>No Photos Added</h1>
+    <div class="buttons-header-no-photos">
+        <a href="{% url 'upload_progress_photo' %}" class="btn btn-custom-no-photos">Upload Photo</a>
+        <a href="{% url 'main_view' %}" class="btn btn-custom-no-photos">Back</a>
+    </div>
     </body>
 {% endif %}
 </html>

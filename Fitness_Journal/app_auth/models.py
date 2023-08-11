@@ -1,13 +1,16 @@
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import Permission, Group
 from django.db import models
 from django.contrib.auth import models as auth_models
+from django.contrib.contenttypes.models import ContentType
+
 
 class AppUserManager(auth_models.BaseUserManager):
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
         if not email:
-            raise ValueError("The given username must be set")
+            raise ValueError("The given email must be set")
 
         user = self.model(email=email, **extra_fields)
         user.password = make_password(password)
@@ -29,6 +32,7 @@ class AppUserManager(auth_models.BaseUserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(email, password, **extra_fields)
+
 
 class AppUser(auth_models.AbstractBaseUser,auth_models.PermissionsMixin):
     USERNAME_FIELD = 'email'

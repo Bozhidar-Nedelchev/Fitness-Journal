@@ -1,19 +1,23 @@
+{% load static %}
 <html>
 <head>
     <title>Form Page</title>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
     <style>
+        body {
+            background-image: url("{% static 'background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
         .navbar-custom, .footer {
             background-color: #FF0000;
         }
-
 
         body {
             display: flex;
@@ -23,6 +27,8 @@
 
         .content {
             flex: 1;
+            color: #fff;
+            padding: 20px;
         }
 
 
@@ -31,15 +37,23 @@
             color: #fff;
             text-decoration: none;
             border: none;
-            border-radius: 4px;
+            border-radius: 40px;
             font-size: 16px;
             cursor: pointer;
             padding: 10px 20px;
+        }
+        .buttons-body {
+            display: flex;
+            margin-bottom: 15px;
+            margin-left: 5px;
+            gap: 10px;
         }
 
         .btn-custom:hover {
             background-color: #CC0000;
         }
+        .footer { position: fixed; top: 90%; left: 0; right: 0; bottom: 0;
+      background: #ffffff; border: solid black; border-width: 2px 0 0 0; }
     </style>
 </head>
 <body>
@@ -49,18 +63,11 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-
-                {% if not user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login_user' %}">Вход</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout_user' %}">Изход</a>
-                    </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="btn btn-custom mt-0" href="{% url 'logout_user' %}">Log out</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -71,33 +78,18 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Submit" class="btn btn-custom mt-3">
+            <div class="buttons-body">
+                <input type="submit" value="Submit" class="btn btn-custom mt-3">
+                <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Back</a>
+            </div>
         </form>
-
-        <a href="{% url 'main_view' %}" class="btn btn-custom mt-3">Nazad</a>
     </div>
 
     <footer class="footer py-3 bg-dark">
         <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-white mx-2">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="row mt-2">
                 <div class="col-12 text-center">
                     <p class="text-white">© 2023 Fitness Journal. All rights reserved.</p>
                 </div>
-            </div>
         </div>
     </footer>
 </body>

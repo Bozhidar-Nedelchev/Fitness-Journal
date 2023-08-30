@@ -7,11 +7,8 @@
         <title>Fitness Journal</title>
     {% endif %}
 
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
     <style>
         body {
@@ -44,7 +41,6 @@
             font-size: 16px;
             cursor: pointer;
             padding: 10px 20px;
-
         }
         .buttons-body {
             display: flex;
@@ -94,15 +90,45 @@
             width: 150px;
             height: 100px;
         }
+        .white-text {
+        color: white;
+        }
 
         .btn-custom:hover {
             background-color: #CC0000;
         }
         .footer { position: fixed; top: 90%; left: 0; right: 0; bottom: 0;
       background: #ffffff; border: solid black; border-width: 2px 0 0 0; }
+        .accordion-content {
+            display: none;
+            margin-left: 20px;
+        }
 
+        .accordion-toggle {
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
 
+        .accordion-toggle.active {
+            font-weight: bold;
+        }
+
+        .accordion-toggle.active + .accordion-content {
+            display: block;
+        }
+        .not_found_error {
+            color:red;
+            margin-top: 270px;
+            margin-left: 450px;
+        }
+        .larger-text {
+            font-size: 100px;
+        }
+        .oops-text {
+            margin-left: 250px; /* Adjust the value as needed */
+        }
     </style>
+
 </head>
 <body>
 
@@ -127,35 +153,10 @@
         </div>
     </nav>
 
-
     <div class="content">
-        {% if not user.is_authenticated %}
-            <p class="home-text-not-auth">
-            No matter what kind of sport a person practices, it is important to<br> have his own diary in which he can keep notes on his nutrition and<br> monitor the progress of his appearance. No matter where you are<br> and what device you use the site from, Fitness Journal gives you the<br> opportunity to do these things personal! Embark on your adventure<br> now!
-            </p>
-            <div class="buttons-body-not-auth">
-                <a href='{% url 'login_user' %}' class="btn btn-custom-not-auth">Get Started!</a>
-            </div>
-            <img src="{% static 'arrow.png' %}" alt="My Image" class="arrow">
-        {% else %}
-            <div class="buttons-body">
-                <a href='{% url 'added_meal' %}' class="btn btn-custom mt-3">My Meals</a>
-                <a href='{% url 'workouts_list' %}' class="btn btn-custom mt-3">My Workouts</a>
-                <a href='{% url 'added_photos' %}' class="btn btn-custom mt-3">My Progress</a>
-                <a href='{% url 'my_profile' %}' class="btn btn-custom mt-3">Profile</a>
-                <a href='{% url 'contacts' %}' class="btn btn-custom mt-3">Contacts</a>
-            </div>
-            <p class="home-text">
-                Hello! Every day you take one small step towards change.<br>
-                Don't wait to get motivated, because motivation comes with<br>persistence and discipline.
-            </p>
-            <div class="content">
-                <p class="random-quote">{{ random_quote }}</p>
-            </div>
-        {% endif %}
-            </div>
+        {% block content %}{% endblock %}
     </div>
-
+    {% block footer %}
     <footer class="footer py-3 bg-dark">
         <div class="container">
                 <div class="col-12 text-center">
@@ -163,5 +164,6 @@
                 </div>
         </div>
     </footer>
+    {% endblock %}
 </body>
 </html>

@@ -11,8 +11,8 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import MealPlan,MealEntry
-from .forms import MealForm,ProfileForm
-from .models import Profile
+from .forms import MealForm,ProfileForm, WorkoutForm
+from .models import Profile, Workout
 from django.views.generic import TemplateView
 import random
 
@@ -260,3 +260,40 @@ class MyProfileView(LoginRequiredMixin, TemplateView):
 
 class ContactsView(TemplateView):
     template_name = 'contacts.html'
+
+
+class WorkoutCreateView(view.CreateView):
+    model = Workout
+    form_class = WorkoutForm
+    template_name = 'add_workout.html'
+    success_url = reverse_lazy('workouts_list')  # Redirect to the user's profile page
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class WorkoutsListView(LoginRequiredMixin, view.ListView):
+    model = Workout
+    template_name = 'workouts_list.html'
+    context_object_name = 'workouts'
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(user=self.request.user)
+        workout_type = self.request.GET.get('workout_type')
+        date = self.request.GET.get('date')
+
+        if workout_type:
+            queryset = queryset.filter(workout_type__icontains=workout_type)
+
+        if date:
+            queryset = queryset.filter(date=date)
+
+        return queryset
+
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
+def custom_500(request):
+    return render(request, '500.html', status=500)

@@ -1,0 +1,11 @@
+{% extends 'web/base.html' %}
+{% block content %}
+<div class="white-text">
+<h2>Add a New Workout</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-custom">Add Workout</button>
+</form>
+</div>
+{% endblock %}

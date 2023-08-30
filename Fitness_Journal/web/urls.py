@@ -1,6 +1,6 @@
 from django.urls import path
 
-from Fitness_Journal.web.views import MainUserView, ProfileUpdateView, UploadProgressPhotoView, UserPhotosListView, MealFormView, DisplayMealsView, MyProfileView, ContactsView
+from Fitness_Journal.web.views import MainUserView, ProfileUpdateView, UploadProgressPhotoView, UserPhotosListView, MealFormView, DisplayMealsView, MyProfileView, ContactsView, WorkoutsListView, WorkoutCreateView
 
 urlpatterns=(
     path('', MainUserView.as_view(), name='main_view'),
@@ -11,5 +11,7 @@ urlpatterns=(
     path('profile/', MyProfileView.as_view(), name='my_profile'),
     path('profile/update/', ProfileUpdateView.as_view(), name='profile_update'),
     path('contacts/', ContactsView.as_view(), name='contacts'),
+    path('add_workout/', WorkoutCreateView.as_view(), name='add_workout'),
+    path('workouts/', WorkoutsListView.as_view(), name='workouts_list'),
 
 )

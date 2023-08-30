@@ -82,3 +82,14 @@ class ProgressPhoto(models.Model):
     caption = models.CharField(max_length=30)
     upload_date = models.DateTimeField(auto_now_add=True)
 
+
+class Workout(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    date = models.DateField()
+    workout_type = models.CharField(max_length=100)
+    duration_minutes = models.PositiveIntegerField()
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s {self.workout_type} on {self.date}"
+

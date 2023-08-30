@@ -1,5 +1,5 @@
 from django import forms
-from .models import ProgressPhoto, Profile
+from .models import ProgressPhoto, Profile, Workout
 
 
 class ProfileForm(forms.ModelForm):
@@ -30,3 +30,9 @@ class ProgressPhotoForm(forms.ModelForm):
     class Meta:
         model = ProgressPhoto
         fields = ['photo', 'caption']
+
+
+class WorkoutForm(forms.ModelForm):
+    class Meta:
+        model = Workout
+        fields = ['date', 'workout_type', 'duration_minutes', 'notes']

@@ -1,0 +1,31 @@
+{% extends 'web/base.html' %}
+{% block content %}
+<div class="white-text">
+<h2>Your Workouts</h2>
+    <form method="get">
+    <label for="workout_type">Filter by Muscle Group:</label>
+    <input type="text" name="workout_type" id="workout_type" value="{{ request.GET.workout_type }}">
+    <label for="date">Filter by Date:</label>
+    <input type="date" name="date" id="date" value="{{ request.GET.date }}">
+    <button type="submit" class="btn-custom">Apply Filter</button>
+</form>
+</div>
+
+<ul class="white-text">
+    {% for workout in workouts %}
+        <details class="workout-details">
+            <summary class="accordion-toggle"><strong>{{ workout.workout_type }}</strong> on {{ workout.date }}</summary>
+            <div class="accordion-content.active">
+                <h5>{{ workout.notes|linebreaksbr }}</h5>
+                Duration: {{ workout.duration_minutes }} minutes
+            </div>
+        </details>
+    {% empty %}
+        <li>No workouts found.</li>
+    {% endfor %}
+</ul>
+<a href='{% url 'add_workout' %}' class="btn btn-custom mt-3">Add Workout</a>
+<a href='{% url 'main_view' %}' class="btn btn-custom mt-3">Back</a>
+{% endblock %}
+{% block footer %}
+{% endblock %}
